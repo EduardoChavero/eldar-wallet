@@ -1,4 +1,4 @@
-package com.example.eldarwalletchallenge.data
+package com.example.eldarwalletchallenge.domain.useCases
 
 import javax.inject.Inject
 

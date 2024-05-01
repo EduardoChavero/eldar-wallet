@@ -3,16 +3,31 @@ package com.example.eldarwalletchallenge.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.eldarwalletchallenge.data.LoginUseCase
+import androidx.lifecycle.viewModelScope
+import com.example.eldarwalletchallenge.domain.useCases.LoginUseCase
+import com.example.eldarwalletchallenge.domain.useCases.PopulateDBUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel(
+class MainViewModel @Inject constructor(
+    private val populateDBUseCase: PopulateDBUseCase,
     private val loginUseCase: LoginUseCase
-): ViewModel() {
+) : ViewModel() {
+
+    private val _populateSuccess = MutableLiveData<Boolean>()
+    val populateSuccess: LiveData<Boolean> get() = _populateSuccess
 
     private val _loginSuccess = MutableLiveData<Boolean>()
     val loginSuccess: LiveData<Boolean> get() = _loginSuccess
+
+    fun populateDB() {
+        viewModelScope.launch {
+            val populate = populateDBUseCase()
+            _populateSuccess.postValue(populate)
+        }
+    }
 
     fun login(user: String, password: String) {
 

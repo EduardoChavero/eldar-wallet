@@ -31,6 +31,7 @@ class LoginFragment : Fragment() {
                 binding.loginPasswordInput.text.toString()
             )
         }
+        viewModel.populateDB()
 
         attachObservers()
         return binding.root
