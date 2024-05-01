@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Eldar Wallet Challenge</string>
+    <string name="app_title">Eldar Wallet</string>
+    
+    <string name="login_user_hint">Usuario</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_button_text">Iniciar sesión</string>
+
+    <string name="balance_label">Saldo</string>
+</resources>
