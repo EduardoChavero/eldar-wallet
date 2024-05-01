@@ -19,7 +19,7 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context): EldarWalletDatabase =
+    fun provideRoom(@ApplicationContext context: Context) =
         Room.databaseBuilder(
             context,
             EldarWalletDatabase::class.java,

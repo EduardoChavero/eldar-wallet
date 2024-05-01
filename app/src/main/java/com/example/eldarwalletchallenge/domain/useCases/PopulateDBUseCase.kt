@@ -11,22 +11,73 @@ class PopulateDBUseCase @Inject constructor(
     suspend operator fun invoke(): Boolean {
         try {
             val users = listOf(
-                UserEntity(name = "Eduardo", password = "12345678", balance = 1320.20),
-                UserEntity(name = "Alice", password = "qwerty", balance = 789.45),
-                UserEntity(name = "Bob", password = "password123", balance = 2345.67),
-                UserEntity(name = "Charlie", password = "abc123", balance = 987.65),
-                UserEntity(name = "Diana", password = "passpass", balance = 4321.09),
-                UserEntity(name = "Eva", password = "evaeva", balance = 567.89),
-                UserEntity(name = "Frank", password = "frankie", balance = 1234.56),
-                UserEntity(name = "Grace", password = "graceful", balance = 987.65),
-                UserEntity(name = "Henry", password = "henry123", balance = 3456.78),
-                UserEntity(name = "Isabel", password = "isabel23", balance = 2100.50),
-                UserEntity(name = "Jack", password = "jackjack", balance = 876.54)
+                UserEntity(
+                    userName = "Eduardo",
+                    fullName = "Eduardo Angel Chavero",
+                    password = "12345678",
+                    balance = 1320.20
+                ),
+                UserEntity(
+                    userName = "Alice",
+                    fullName = "Alice Smith",
+                    password = "password123",
+                    balance = 2300.50
+                ),
+                UserEntity(
+                    userName = "Bob",
+                    fullName = "Bob Johnson",
+                    password = "bob123",
+                    balance = 800.00
+                ),
+                UserEntity(
+                    userName = "Charlie",
+                    fullName = "Charlie Brown",
+                    password = "charlie456",
+                    balance = 1500.75
+                ),
+                UserEntity(
+                    userName = "Diana",
+                    fullName = "Diana Rodriguez",
+                    password = "diana789",
+                    balance = 2100.30
+                ),
+                UserEntity(
+                    userName = "Emma",
+                    fullName = "Emma Wilson",
+                    password = "emma1234",
+                    balance = 1800.00
+                ),
+                UserEntity(
+                    userName = "Frank",
+                    fullName = "Frank Garcia",
+                    password = "frank567",
+                    balance = 3000.60
+                ),
+                UserEntity(
+                    userName = "Grace",
+                    fullName = "Grace Lee",
+                    password = "grace999",
+                    balance = 500.00
+                ),
+                UserEntity(
+                    userName = "Henry",
+                    fullName = "Henry Martinez",
+                    password = "henry777",
+                    balance = 2700.25
+                ),
+                UserEntity(
+                    userName = "Isabel",
+                    fullName = "Isabel Perez",
+                    password = "isabel321",
+                    balance = 400.00
+                )
             )
+
             eldarWalletRepository.populateUserTable(users)
             return true
         } catch (e: Exception) {
             return false
         }
     }
+
 }

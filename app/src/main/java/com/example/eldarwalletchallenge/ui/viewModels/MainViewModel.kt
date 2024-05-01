@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eldarwalletchallenge.domain.model.User
 import com.example.eldarwalletchallenge.domain.useCases.LoginUseCase
 import com.example.eldarwalletchallenge.domain.useCases.PopulateDBUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,8 @@ class MainViewModel @Inject constructor(
     private val _loginSuccess = MutableLiveData<Boolean>()
     val loginSuccess: LiveData<Boolean> get() = _loginSuccess
 
+    private var userLogged: User? = null
+
     fun populateDB() {
         viewModelScope.launch {
             val populate = populateDBUseCase()
@@ -30,8 +33,10 @@ class MainViewModel @Inject constructor(
     }
 
     fun login(user: String, password: String) {
-
-        loginUseCase(user, password)
+        viewModelScope.launch {
+            userLogged = loginUseCase(user, password)
+            _loginSuccess.postValue(userLogged != null)
+        }
     }
 
 }

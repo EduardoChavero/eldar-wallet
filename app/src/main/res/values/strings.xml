@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Eldar Wallet Challenge</string>
     <string name="app_title">Eldar Wallet</string>
-    
+
+    <string name="loader_tag">Loader Dialog</string>
+    <string name="populate_database_error">Hubo un error al actualizar la base de datos</string>
+
     <string name="login_user_hint">Usuario</string>
     <string name="login_password_hint">Contraseña</string>
     <string name="login_button_text">Iniciar sesión</string>

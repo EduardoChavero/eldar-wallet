@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eldarwalletchallenge.R
 import com.example.eldarwalletchallenge.databinding.FragmentLoginBinding
+import com.example.eldarwalletchallenge.ui.reusables.LoaderDialog
 import com.example.eldarwalletchallenge.ui.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +19,8 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: MainViewModel by activityViewModels()
+
+    private val loaderDialog = LoaderDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +36,7 @@ class LoginFragment : Fragment() {
             )
         }
         viewModel.populateDB()
-
+        loaderDialog.show(parentFragmentManager, "LoaderDialog")
         attachObservers()
         return binding.root
     }
@@ -43,6 +47,18 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             } else {
                 //ERROR
+            }
+        }
+
+        viewModel.populateSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                loaderDialog.dismiss()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.populate_database_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

@@ -7,7 +7,8 @@ import com.example.eldarwalletchallenge.data.database.entities.UserEntity
 
 @Database(
     entities = [UserEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class EldarWalletDatabase: RoomDatabase() {
 

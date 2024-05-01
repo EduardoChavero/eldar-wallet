@@ -9,7 +9,12 @@ class EldarWalletRepository @Inject constructor(
 ) {
 
     suspend fun populateUserTable(users: List<UserEntity>) {
+        userDao.removeAllUsers()
         userDao.insert(users)
+    }
+
+    suspend fun login(userName: String): UserEntity {
+        return userDao.login(userName)
     }
 
 }
