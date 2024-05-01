@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.eldarwalletchallenge.R
 import com.example.eldarwalletchallenge.databinding.FragmentLoginBinding
 import com.example.eldarwalletchallenge.ui.viewModels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
