@@ -46,7 +46,11 @@ class LoginFragment : Fragment() {
             if (it) {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             } else {
-                //ERROR
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.login_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

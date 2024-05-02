@@ -9,6 +9,9 @@ import com.example.eldarwalletchallenge.data.database.entities.UserEntity
 @Dao
 interface UserDao {
 
+    @Query("SELECT * FROM user_table")
+    suspend fun getUsers(): List<UserEntity>
+
     @Query("SELECT * FROM user_table WHERE userName = :userName")
     suspend fun login(userName: String): UserEntity
 

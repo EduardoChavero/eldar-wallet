@@ -1,7 +1,6 @@
 package com.example.eldarwalletchallenge.ui.viewModels
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,10 @@ import com.example.eldarwalletchallenge.domain.model.HomeAction
 import com.example.eldarwalletchallenge.domain.model.User
 import com.example.eldarwalletchallenge.domain.useCases.GetHomeActionsUseCase
 import com.example.eldarwalletchallenge.domain.useCases.GetUserCardsUseCase
+import com.example.eldarwalletchallenge.domain.useCases.IsCorrectCardDataUseCase
 import com.example.eldarwalletchallenge.domain.useCases.LoginUseCase
 import com.example.eldarwalletchallenge.domain.useCases.PopulateDBUseCase
+import com.example.eldarwalletchallenge.domain.useCases.SaveNewCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +23,9 @@ class MainViewModel @Inject constructor(
     private val populateDBUseCase: PopulateDBUseCase,
     private val loginUseCase: LoginUseCase,
     private val getHomeActionsUseCase: GetHomeActionsUseCase,
-    private val getUserCardsUseCase: GetUserCardsUseCase
+    private val getUserCardsUseCase: GetUserCardsUseCase,
+    private val isCorrectCardDataUseCase: IsCorrectCardDataUseCase,
+    private val saveNewCardUseCase: SaveNewCardUseCase
 ) : ViewModel() {
 
     private val _populateSuccess = MutableLiveData<Boolean>()
@@ -36,6 +39,9 @@ class MainViewModel @Inject constructor(
 
     private val _userCards = MutableLiveData<List<Card>>()
     val userCards: LiveData<List<Card>> get() = _userCards
+
+    private val _addCardSuccess = MutableLiveData<Boolean>()
+    val addCardSuccess: LiveData<Boolean> get() = _addCardSuccess
 
     private var userLogged: User? = null
 
@@ -75,6 +81,36 @@ class MainViewModel @Inject constructor(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val result = getUserCardsUseCase(userLogged?.id ?: 0)
                 _userCards.postValue(result)
+            }
+        }
+    }
+
+    fun addCardRequest(
+        cardNumber: String,
+        ownerName: String,
+        expirationDate: String,
+        cvv: String
+    ) {
+        viewModelScope.launch {
+            if (ownerName.lowercase() != userLogged?.fullName?.lowercase()) {
+                _addCardSuccess.postValue(false)
+                return@launch
+            }
+            val card = Card(
+                ownerId = userLogged?.id ?: -1,
+                ownerName = ownerName,
+                cardNumber = cardNumber,
+                expirationDate = expirationDate,
+                cvv = cvv,
+            )
+            if (!isCorrectCardDataUseCase(card)) {
+                _addCardSuccess.postValue(false)
+                return@launch
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val saved = saveNewCardUseCase(card)
+                _addCardSuccess.postValue(saved)
             }
         }
     }

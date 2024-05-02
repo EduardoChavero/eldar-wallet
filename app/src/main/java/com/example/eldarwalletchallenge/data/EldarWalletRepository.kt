@@ -21,8 +21,8 @@ class EldarWalletRepository @Inject constructor(
         cardDao.insert(cards)
     }
 
-    suspend fun login(userName: String): UserEntity {
-        return userDao.login(userName)
+    suspend fun getUsers(): List<UserEntity> {
+        return userDao.getUsers()
     }
 
     fun getHomeActions(): List<HomeAction> {
@@ -31,6 +31,10 @@ class EldarWalletRepository @Inject constructor(
 
     suspend fun getUserCards(userId: Long): List<CardEntity> {
         return cardDao.getUserCards(userId)
+    }
+
+    suspend fun saveNewCard(card: CardEntity) {
+        cardDao.insertNewCard(card)
     }
 
 }

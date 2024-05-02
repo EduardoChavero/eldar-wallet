@@ -12,8 +12,11 @@ interface CardDao {
     @Query("SELECT * FROM cards_table WHERE ownerId = :userId")
     suspend fun getUserCards(userId: Long): List<CardEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(users: List<CardEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertNewCard(card: CardEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(cards: List<CardEntity>)
 
     @Query("DELETE FROM cards_table")
     suspend fun removeAllCards()

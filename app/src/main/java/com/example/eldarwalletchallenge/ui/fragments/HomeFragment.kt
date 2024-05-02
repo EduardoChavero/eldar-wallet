@@ -1,22 +1,26 @@
 package com.example.eldarwalletchallenge.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eldarwalletchallenge.R
 import com.example.eldarwalletchallenge.databinding.FragmentHomeBinding
 import com.example.eldarwalletchallenge.domain.model.Card
 import com.example.eldarwalletchallenge.domain.model.HomeAction
+import com.example.eldarwalletchallenge.domain.model.HomeActionTypes
 import com.example.eldarwalletchallenge.ui.adapters.HomeActionAdapter
 import com.example.eldarwalletchallenge.ui.adapters.HomeCardAdapter
 import com.example.eldarwalletchallenge.ui.reusables.LoaderDialog
 import com.example.eldarwalletchallenge.ui.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
@@ -41,7 +45,7 @@ class HomeFragment : Fragment(),
         binding.balanceAmount.text = viewModel.getUserBalance()
         viewModel.getHomeActions()
         viewModel.getUserCards()
-        
+
         attachObservers()
         return binding.root
     }
@@ -49,19 +53,19 @@ class HomeFragment : Fragment(),
     private fun attachObservers() {
         viewModel.homeActions.observe(viewLifecycleOwner) { homeActions ->
             with(binding.homeActions) {
-                setHasFixedSize(true)
-                layoutManager = GridLayoutManager(requireContext(), 3)
+                layoutManager = GridLayoutManager(context, 3)
                 val actionAdapter = HomeActionAdapter(homeActions)
                 actionAdapter.setListener(this@HomeFragment)
+                setHasFixedSize(true)
                 adapter = actionAdapter
             }
         }
         viewModel.userCards.observe(viewLifecycleOwner) { userCards ->
             with(binding.cardList) {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(requireContext())
+                layoutManager = LinearLayoutManager(context)
                 val cardsAdapter = HomeCardAdapter(userCards)
                 cardsAdapter.setListener(this@HomeFragment)
+                setHasFixedSize(true)
                 adapter = cardsAdapter
             }
             loaderDialog.dismiss()
@@ -69,10 +73,18 @@ class HomeFragment : Fragment(),
     }
 
     override fun onActionClicked(homeAction: HomeAction) {
-
+        when (homeAction.type) {
+            HomeActionTypes.PAYMENT -> {}
+            HomeActionTypes.ADD_CARD -> {
+                findNavController().navigate(R.id.action_homeFragment_to_addCardFragment)
+            }
+            HomeActionTypes.GENERATE_QR -> {}
+            HomeActionTypes.DEFAULT -> {}
+        }
     }
 
     override fun onCardClicked(card: Card) {
+
 
     }
 }

@@ -70,6 +70,8 @@ class HomeCardViewHolder(private val binding: HomeCardBinding) :
         binding.cardNumber.text =
             itemView.context.getString(R.string.home_card_number_hidden, card.lastNumbers)
 
+        binding.homeCardContainer.setOnClickListener(this)
+
     }
 
     override fun onClick(p0: View) {

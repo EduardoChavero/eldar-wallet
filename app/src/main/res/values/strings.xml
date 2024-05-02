@@ -4,6 +4,7 @@
 
     <string name="loader_tag">Loader Dialog</string>
     <string name="populate_database_error">Hubo un error al actualizar la base de datos</string>
+    <string name="login_error">Las credenciales de usuario son erroneas</string>
 
     <string name="login_user_hint">Usuario</string>
     <string name="login_password_hint">Contraseña</string>
@@ -12,5 +13,17 @@
     <string name="home_header_welcome">¡Hola %s!</string>
     <string name="balance_label">Saldo</string>
     <string name="home_card_number_hidden">**** %s</string>
+
+    <string name="add_card_header">Agregar Tarjeta</string>
+    <string name="add_card_number_hint">Numero de Tarjeta</string>
+    <string name="add_card_owner_hint">Nombre del titular</string>
+    <string name="add_card_cvv_hint">CVV</string>
+    <string name="add_card_expiration_month_hint">Mes Vto.</string>
+    <string name="add_card_expiration_year_hint">Año Vto.</string>
+    <string name="add_card_button_text">Agregar tarjeta</string>
+    <string name="add_card_success_toast">Tarjeta guardada con exito</string>
+    <string name="add_card_error_toast">Hubo un error al guardar la tarjeta</string>
+    <string name="add_card_number_error_toast">El numero de tarjeta no es correcto</string>
+
 
 </resources>

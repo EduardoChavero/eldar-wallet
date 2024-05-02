@@ -1,5 +1,6 @@
 package com.example.eldarwalletchallenge.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,10 +65,14 @@ class HomeActionViewHolder(private val binding: HomeActionBinding) :
             )
         )
         binding.actionLabel.text = homeAction.label
+        binding.homeActionContainer.setOnClickListener(this)
     }
 
     override fun onClick(p0: View) {
-        position?.let { listener?.onItemClicked(it) }
+        Log.d("TAG", "onClick")
+        position?.let {
+            listener?.onItemClicked(it)
+        }
     }
 
 }

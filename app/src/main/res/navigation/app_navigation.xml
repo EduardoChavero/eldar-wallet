@@ -17,6 +17,14 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.eldarwalletchallenge.ui.fragments.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.example.eldarwalletchallenge.ui.fragments.AddCardFragment"
+        android:label="AddCardFragment" />
 
 </navigation>

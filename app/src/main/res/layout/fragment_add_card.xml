@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/add_card_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="@string/add_card_header"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColor"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/add_card_logo"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/add_card_header"
+        tools:src="@drawable/ic_master_logo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/card_number_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:hint="@string/add_card_number_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_card_logo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/card_number_input"
+            android:maxLength="16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/card_owner_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:hint="@string/add_card_owner_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_number_container">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/card_owner_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/guide"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/card_expiration_month_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:hint="@string/add_card_expiration_month_hint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/card_expiration_year_container"
+        app:layout_constraintTop_toBottomOf="@+id/card_owner_container">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/card_expiration_month_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLength="2"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/card_expiration_year_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:hint="@string/add_card_expiration_year_hint"
+        app:layout_constraintEnd_toStartOf="@+id/guide"
+        app:layout_constraintStart_toEndOf="@+id/card_expiration_month_container"
+        app:layout_constraintTop_toBottomOf="@+id/card_owner_container">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/card_expiration_year_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLength="2"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/card_cvv_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:hint="@string/add_card_cvv_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guide"
+        app:layout_constraintTop_toBottomOf="@+id/card_owner_container">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/card_cvv_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLength="4"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/add_card_button"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="@string/add_card_button_text"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

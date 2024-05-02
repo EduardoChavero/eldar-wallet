@@ -8,10 +8,15 @@ class LoginUseCase @Inject constructor(
     private val eldarWalletRepository: EldarWalletRepository
 ) {
 
-    suspend operator fun invoke(user: String, password: String): User? {
+    suspend operator fun invoke(userName: String, password: String): User? {
         try {
-            val userData = eldarWalletRepository.login(user)
-            if (userData.password == password) {
+            val users = eldarWalletRepository.getUsers()
+
+            val userData = users.find {
+                it.userName.lowercase() == userName.lowercase()
+            }
+
+            if (userData?.password == password) {
                 return User(
                     id = userData.id,
                     userName = userData.userName,
