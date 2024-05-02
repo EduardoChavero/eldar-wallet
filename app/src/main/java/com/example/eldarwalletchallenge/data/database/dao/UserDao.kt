@@ -12,7 +12,7 @@ interface UserDao {
     @Query("SELECT * FROM user_table WHERE userName = :userName")
     suspend fun login(userName: String): UserEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(users: List<UserEntity>)
 
     @Query("DELETE FROM user_table")

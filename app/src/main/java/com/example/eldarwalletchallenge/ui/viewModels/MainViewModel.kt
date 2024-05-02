@@ -1,12 +1,16 @@
 package com.example.eldarwalletchallenge.ui.viewModels
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eldarwalletchallenge.domain.model.Card
 import com.example.eldarwalletchallenge.domain.model.HomeAction
 import com.example.eldarwalletchallenge.domain.model.User
 import com.example.eldarwalletchallenge.domain.useCases.GetHomeActionsUseCase
+import com.example.eldarwalletchallenge.domain.useCases.GetUserCardsUseCase
 import com.example.eldarwalletchallenge.domain.useCases.LoginUseCase
 import com.example.eldarwalletchallenge.domain.useCases.PopulateDBUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +21,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val populateDBUseCase: PopulateDBUseCase,
     private val loginUseCase: LoginUseCase,
-    private val getHomeActionsUseCase: GetHomeActionsUseCase
+    private val getHomeActionsUseCase: GetHomeActionsUseCase,
+    private val getUserCardsUseCase: GetUserCardsUseCase
 ) : ViewModel() {
 
     private val _populateSuccess = MutableLiveData<Boolean>()
@@ -29,12 +34,17 @@ class MainViewModel @Inject constructor(
     private val _homeActions = MutableLiveData<List<HomeAction>>()
     val homeActions: LiveData<List<HomeAction>> get() = _homeActions
 
+    private val _userCards = MutableLiveData<List<Card>>()
+    val userCards: LiveData<List<Card>> get() = _userCards
+
     private var userLogged: User? = null
 
     fun populateDB() {
         viewModelScope.launch {
-            val populate = populateDBUseCase()
-            _populateSuccess.postValue(populate)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val populate = populateDBUseCase()
+                _populateSuccess.postValue(populate)
+            }
         }
     }
 
@@ -58,5 +68,14 @@ class MainViewModel @Inject constructor(
     fun getHomeActions() {
         val result = getHomeActionsUseCase()
         _homeActions.postValue(result)
+    }
+
+    fun getUserCards() {
+        viewModelScope.launch {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val result = getUserCardsUseCase(userLogged?.id ?: 0)
+                _userCards.postValue(result)
+            }
+        }
     }
 }

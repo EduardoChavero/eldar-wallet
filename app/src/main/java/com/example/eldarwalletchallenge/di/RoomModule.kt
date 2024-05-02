@@ -3,6 +3,7 @@ package com.example.eldarwalletchallenge.di
 import android.content.Context
 import androidx.room.Room
 import com.example.eldarwalletchallenge.data.database.EldarWalletDatabase
+import com.example.eldarwalletchallenge.data.database.dao.CardDao
 import com.example.eldarwalletchallenge.data.database.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -29,5 +30,9 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideUserDao(db: EldarWalletDatabase): UserDao = db.getUserDao()
+
+    @Singleton
+    @Provides
+    fun provideCardDao(db: EldarWalletDatabase): CardDao = db.getCardDao()
 
 }

@@ -9,7 +9,8 @@
     <string name="login_password_hint">Contraseña</string>
     <string name="login_button_text">Iniciar sesión</string>
 
-    <string name="home_header_welcome">Hola %s</string>
+    <string name="home_header_welcome">¡Hola %s!</string>
     <string name="balance_label">Saldo</string>
+    <string name="home_card_number_hidden">**** %s</string>
 
 </resources>

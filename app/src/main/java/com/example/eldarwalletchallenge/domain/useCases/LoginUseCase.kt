@@ -13,6 +13,7 @@ class LoginUseCase @Inject constructor(
             val userData = eldarWalletRepository.login(user)
             if (userData.password == password) {
                 return User(
+                    id = userData.id,
                     userName = userData.userName,
                     fullName = userData.fullName,
                     balance = userData.balance
