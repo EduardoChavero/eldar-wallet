@@ -1,7 +1,9 @@
 package com.example.eldarwalletchallenge.data
 
+import com.example.eldarwalletchallenge.data.database.HomeActionProvider
 import com.example.eldarwalletchallenge.data.database.dao.UserDao
 import com.example.eldarwalletchallenge.data.database.entities.UserEntity
+import com.example.eldarwalletchallenge.domain.model.HomeAction
 import javax.inject.Inject
 
 class EldarWalletRepository @Inject constructor(
@@ -15,6 +17,10 @@ class EldarWalletRepository @Inject constructor(
 
     suspend fun login(userName: String): UserEntity {
         return userDao.login(userName)
+    }
+
+    fun getHomeActions(): List<HomeAction> {
+        return HomeActionProvider.HOME_ACTIONS
     }
 
 }

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
     <ImageView
         android:id="@+id/action_icon"
@@ -19,13 +19,14 @@
         tools:src="@drawable/ic_qr" />
 
     <TextView
-        tools:text="Generar QR"
+        android:id="@+id/action_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/action_icon"
         app:layout_constraintStart_toStartOf="@+id/action_icon"
-        app:layout_constraintTop_toBottomOf="@+id/action_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/action_icon"
+        tools:text="Generar QR" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
