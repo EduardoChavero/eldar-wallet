@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         val navGraphInflate = inflate.inflate(R.navigation.app_navigation)
 
         navHostFragment.navController.setGraph(navGraphInflate, intent.extras)
-        val navController = navHostFragment.navController
     }
 
 

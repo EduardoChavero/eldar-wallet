@@ -29,5 +29,8 @@
     <string name="qr_view_header">Recibir pago por QR</string>
     <string name="qr_view_button">Cancelar</string>
 
+    <string name="pay_card_selection_header">Selecciona una tarjeta</string>
+    <string name="pay_card_selection_back">Volver</string>
+    <string name="pay_nfc_reader_header">Por favor apoya el telefono en el dispositivo de cobro</string>
 
 </resources>

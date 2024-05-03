@@ -52,6 +52,7 @@ class MainViewModel @Inject constructor(
 
     private var userLogged: User? = null
     private var qrCodeBitmap: Bitmap? = null
+    private var cardSelected: Card? = null
 
     fun populateDB() {
         viewModelScope.launch {
@@ -132,5 +133,9 @@ class MainViewModel @Inject constructor(
 
     fun getQrBitmap(): Bitmap? {
         return qrCodeBitmap
+    }
+
+    fun saveCardSelected(card: Card) {
+        cardSelected = card
     }
 }

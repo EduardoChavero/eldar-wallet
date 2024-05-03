@@ -87,7 +87,9 @@ class HomeFragment : Fragment(),
 
     override fun onActionClicked(homeAction: HomeAction) {
         when (homeAction.type) {
-            HomeActionTypes.PAYMENT -> {}
+            HomeActionTypes.PAYMENT -> {
+                findNavController().navigate(R.id.action_homeFragment_to_paySelectCardFragment)
+            }
             HomeActionTypes.ADD_CARD -> {
                 findNavController().navigate(R.id.action_homeFragment_to_addCardFragment)
             }

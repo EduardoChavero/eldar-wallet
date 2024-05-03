@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_homeFragment_to_QRViewFragment"
             app:destination="@id/QRViewFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paySelectCardFragment"
+            app:destination="@id/paySelectCardFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
@@ -33,5 +36,9 @@
         android:id="@+id/QRViewFragment"
         android:name="com.example.eldarwalletchallenge.ui.fragments.QRViewFragment"
         android:label="QRViewFragment" />
+    <fragment
+        android:id="@+id/paySelectCardFragment"
+        android:name="com.example.eldarwalletchallenge.ui.fragments.PaySelectCardFragment"
+        android:label="PaySelectCardFragment" />
 
 </navigation>
