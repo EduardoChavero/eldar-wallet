@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.example.eldarwalletchallenge.R
 import com.example.eldarwalletchallenge.databinding.FragmentAddCardBinding
+import com.example.eldarwalletchallenge.ui.reusables.EventObserver
 import com.example.eldarwalletchallenge.ui.reusables.GetResourceUtil
 import com.example.eldarwalletchallenge.ui.reusables.LoaderDialog
 import com.example.eldarwalletchallenge.ui.viewModels.MainViewModel
@@ -71,7 +72,7 @@ class AddCardFragment : Fragment(), TextWatcher {
                 )
             )
         }
-        viewModel.addCardSuccess.observe(viewLifecycleOwner) {
+        viewModel.addCardSuccess.observe(viewLifecycleOwner, EventObserver {
             loaderDialog.dismiss()
             if (it) {
                 Toast.makeText(
@@ -87,7 +88,7 @@ class AddCardFragment : Fragment(), TextWatcher {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
+        })
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

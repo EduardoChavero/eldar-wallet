@@ -1,10 +1,10 @@
 package com.example.eldarwalletchallenge.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,10 +17,10 @@ import com.example.eldarwalletchallenge.domain.model.HomeAction
 import com.example.eldarwalletchallenge.domain.model.HomeActionTypes
 import com.example.eldarwalletchallenge.ui.adapters.HomeActionAdapter
 import com.example.eldarwalletchallenge.ui.adapters.HomeCardAdapter
+import com.example.eldarwalletchallenge.ui.reusables.EventObserver
 import com.example.eldarwalletchallenge.ui.reusables.LoaderDialog
 import com.example.eldarwalletchallenge.ui.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
@@ -60,7 +60,7 @@ class HomeFragment : Fragment(),
                 adapter = actionAdapter
             }
         }
-        viewModel.userCards.observe(viewLifecycleOwner) { userCards ->
+        viewModel.userCards.observe(viewLifecycleOwner, EventObserver { userCards ->
             with(binding.cardList) {
                 layoutManager = LinearLayoutManager(context)
                 val cardsAdapter = HomeCardAdapter(userCards)
@@ -69,7 +69,20 @@ class HomeFragment : Fragment(),
                 adapter = cardsAdapter
             }
             loaderDialog.dismiss()
-        }
+        })
+
+        viewModel.generateQrCodeSuccess.observe(viewLifecycleOwner, EventObserver { qrGenerated ->
+            loaderDialog.dismiss()
+            if (qrGenerated) {
+                findNavController().navigate(R.id.action_homeFragment_to_QRViewFragment)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.home_qr_generate_error),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     override fun onActionClicked(homeAction: HomeAction) {
@@ -78,7 +91,10 @@ class HomeFragment : Fragment(),
             HomeActionTypes.ADD_CARD -> {
                 findNavController().navigate(R.id.action_homeFragment_to_addCardFragment)
             }
-            HomeActionTypes.GENERATE_QR -> {}
+            HomeActionTypes.GENERATE_QR -> {
+                loaderDialog.show(parentFragmentManager, getString(R.string.loader_tag))
+                viewModel.generateQRCode()
+            }
             HomeActionTypes.DEFAULT -> {}
         }
     }

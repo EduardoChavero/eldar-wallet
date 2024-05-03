@@ -21,10 +21,17 @@
         <action
             android:id="@+id/action_homeFragment_to_addCardFragment"
             app:destination="@id/addCardFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_QRViewFragment"
+            app:destination="@id/QRViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
         android:name="com.example.eldarwalletchallenge.ui.fragments.AddCardFragment"
         android:label="AddCardFragment" />
+    <fragment
+        android:id="@+id/QRViewFragment"
+        android:name="com.example.eldarwalletchallenge.ui.fragments.QRViewFragment"
+        android:label="QRViewFragment" />
 
 </navigation>

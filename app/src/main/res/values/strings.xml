@@ -13,6 +13,7 @@
     <string name="home_header_welcome">¡Hola %s!</string>
     <string name="balance_label">Saldo</string>
     <string name="home_card_number_hidden">**** %s</string>
+    <string name="home_qr_generate_error">Hubo un problema al generar su QR</string>
 
     <string name="add_card_header">Agregar Tarjeta</string>
     <string name="add_card_number_hint">Numero de Tarjeta</string>
@@ -24,6 +25,9 @@
     <string name="add_card_success_toast">Tarjeta guardada con exito</string>
     <string name="add_card_error_toast">Hubo un error al guardar la tarjeta</string>
     <string name="add_card_number_error_toast">El numero de tarjeta no es correcto</string>
+
+    <string name="qr_view_header">Recibir pago por QR</string>
+    <string name="qr_view_button">Cancelar</string>
 
 
 </resources>

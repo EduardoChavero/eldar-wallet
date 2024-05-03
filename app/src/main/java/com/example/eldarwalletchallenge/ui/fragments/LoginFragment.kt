@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.eldarwalletchallenge.R
 import com.example.eldarwalletchallenge.databinding.FragmentLoginBinding
+import com.example.eldarwalletchallenge.ui.reusables.EventObserver
 import com.example.eldarwalletchallenge.ui.reusables.LoaderDialog
 import com.example.eldarwalletchallenge.ui.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun attachObservers() {
-        viewModel.loginSuccess.observe(viewLifecycleOwner) {
+        viewModel.loginSuccess.observe(viewLifecycleOwner, EventObserver {
             if (it) {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             } else {
@@ -52,9 +53,9 @@ class LoginFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
+        })
 
-        viewModel.populateSuccess.observe(viewLifecycleOwner) {
+        viewModel.populateSuccess.observe(viewLifecycleOwner, EventObserver {
             if (it) {
                 loaderDialog.dismiss()
             } else {
@@ -64,7 +65,7 @@ class LoginFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
+        })
     }
 
 

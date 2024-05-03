@@ -1,5 +1,6 @@
 package com.example.eldarwalletchallenge.ui.viewModels
 
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,12 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.eldarwalletchallenge.domain.model.Card
 import com.example.eldarwalletchallenge.domain.model.HomeAction
 import com.example.eldarwalletchallenge.domain.model.User
+import com.example.eldarwalletchallenge.domain.useCases.GenerateQrUseCase
 import com.example.eldarwalletchallenge.domain.useCases.GetHomeActionsUseCase
 import com.example.eldarwalletchallenge.domain.useCases.GetUserCardsUseCase
 import com.example.eldarwalletchallenge.domain.useCases.IsCorrectCardDataUseCase
 import com.example.eldarwalletchallenge.domain.useCases.LoginUseCase
 import com.example.eldarwalletchallenge.domain.useCases.PopulateDBUseCase
 import com.example.eldarwalletchallenge.domain.useCases.SaveNewCardUseCase
+import com.example.eldarwalletchallenge.ui.reusables.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,31 +28,36 @@ class MainViewModel @Inject constructor(
     private val getHomeActionsUseCase: GetHomeActionsUseCase,
     private val getUserCardsUseCase: GetUserCardsUseCase,
     private val isCorrectCardDataUseCase: IsCorrectCardDataUseCase,
-    private val saveNewCardUseCase: SaveNewCardUseCase
+    private val saveNewCardUseCase: SaveNewCardUseCase,
+    private val generateQrUseCase: GenerateQrUseCase
 ) : ViewModel() {
 
-    private val _populateSuccess = MutableLiveData<Boolean>()
-    val populateSuccess: LiveData<Boolean> get() = _populateSuccess
+    private val _populateSuccess = MutableLiveData<Event<Boolean>>()
+    val populateSuccess: LiveData<Event<Boolean>> get() = _populateSuccess
 
-    private val _loginSuccess = MutableLiveData<Boolean>()
-    val loginSuccess: LiveData<Boolean> get() = _loginSuccess
+    private val _loginSuccess = MutableLiveData<Event<Boolean>>()
+    val loginSuccess: LiveData<Event<Boolean>> get() = _loginSuccess
 
     private val _homeActions = MutableLiveData<List<HomeAction>>()
     val homeActions: LiveData<List<HomeAction>> get() = _homeActions
 
-    private val _userCards = MutableLiveData<List<Card>>()
-    val userCards: LiveData<List<Card>> get() = _userCards
+    private val _userCards = MutableLiveData<Event<List<Card>>>()
+    val userCards: LiveData<Event<List<Card>>> get() = _userCards
 
-    private val _addCardSuccess = MutableLiveData<Boolean>()
-    val addCardSuccess: LiveData<Boolean> get() = _addCardSuccess
+    private val _addCardSuccess = MutableLiveData<Event<Boolean>>()
+    val addCardSuccess: LiveData<Event<Boolean>> get() = _addCardSuccess
+
+    private val _generateQrCodeSuccess = MutableLiveData<Event<Boolean>>()
+    val generateQrCodeSuccess: LiveData<Event<Boolean>> get() = _generateQrCodeSuccess
 
     private var userLogged: User? = null
+    private var qrCodeBitmap: Bitmap? = null
 
     fun populateDB() {
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val populate = populateDBUseCase()
-                _populateSuccess.postValue(populate)
+                _populateSuccess.postValue(Event(populate))
             }
         }
     }
@@ -57,7 +65,7 @@ class MainViewModel @Inject constructor(
     fun login(user: String, password: String) {
         viewModelScope.launch {
             userLogged = loginUseCase(user, password)
-            _loginSuccess.postValue(userLogged != null)
+            _loginSuccess.postValue(Event(userLogged != null))
         }
     }
 
@@ -80,7 +88,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val result = getUserCardsUseCase(userLogged?.id ?: 0)
-                _userCards.postValue(result)
+                _userCards.postValue(Event(result))
             }
         }
     }
@@ -93,7 +101,7 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (ownerName.lowercase() != userLogged?.fullName?.lowercase()) {
-                _addCardSuccess.postValue(false)
+                _addCardSuccess.postValue(Event(false))
                 return@launch
             }
             val card = Card(
@@ -104,14 +112,25 @@ class MainViewModel @Inject constructor(
                 cvv = cvv,
             )
             if (!isCorrectCardDataUseCase(card)) {
-                _addCardSuccess.postValue(false)
+                _addCardSuccess.postValue(Event(false))
                 return@launch
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val saved = saveNewCardUseCase(card)
-                _addCardSuccess.postValue(saved)
+                _addCardSuccess.postValue(Event(saved))
             }
         }
+    }
+
+    fun generateQRCode() {
+        viewModelScope.launch {
+            qrCodeBitmap = generateQrUseCase(userLogged?.fullName ?: "")
+            _generateQrCodeSuccess.postValue(Event(qrCodeBitmap != null))
+        }
+    }
+
+    fun getQrBitmap(): Bitmap? {
+        return qrCodeBitmap
     }
 }
